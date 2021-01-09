@@ -23,9 +23,9 @@ const Main = () => {
       duration: 288880,
     },
   ]);
-  const shownList = lists.map((list, listIndex) => (
+  const shownList = lists.map((list, listIndex) =>
     <ListItem list={list} listIndex={listIndex} />
-  ));
+  );
   return (
     <View>
       <Timer selected={selected} lists={lists} />
