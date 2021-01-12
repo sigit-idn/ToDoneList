@@ -1,13 +1,7 @@
 import {faPlay} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  CheckBox,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import {View, Text, CheckBox, TouchableHighlight} from 'react-native';
 
 const ListItem = (props) => {
   const minutes = Math.floor(
@@ -15,12 +9,22 @@ const ListItem = (props) => {
   );
   const seconds = Math.floor((props.list.duration % (1000 * 60)) / 1000);
   const [isSelected, setIsSelected] = useState(false);
+  const setSelection = () => {
+    setIsSelected(true);
+    props.setSelected(props.listIndex);
+  }
   return (
-    <View style={styles.verticalCenter}>
+    <View
+      style={{
+        padding: 10,
+        flexDirection: 'row',
+        alignContent: 'center',
+        position: 'relative',
+      }}>
       <CheckBox
         value={isSelected}
         onValueChange={setIsSelected}
-        style={styles.CheckBox}
+        style={{height: '100%'}}
       />
       <TouchableHighlight>
         <View style={{paddingLeft: 10}}>
@@ -30,35 +34,24 @@ const ListItem = (props) => {
           <Text style={{color: '#3b3b3b'}}>{props.list.subtitle}</Text>
         </View>
       </TouchableHighlight>
-      <View
+      <TouchableHighlight
         style={{
           position: 'absolute',
           height: '100%',
           justifyContent: 'center',
-          alignItems: 'center',
           right: 10,
           top: 10,
-        }}>
-        <FontAwesomeIcon icon={faPlay} />
-        <Text>
-          {minutes < 10 ? '0' + minutes : minutes}:
-          {seconds < 10 ? '0' + seconds : seconds}
-        </Text>
-      </View>
+        }}
+        onPress={setSelection}>
+        <View>
+          <FontAwesomeIcon icon={faPlay} style={{marginLeft: 10}} />
+          <Text>
+            {minutes < 10 ? '0' + minutes : minutes}:
+            {seconds < 10 ? '0' + seconds : seconds}
+          </Text>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  verticalCenter: {
-    padding: 10,
-    flexDirection: 'row',
-    alignContent: 'center',
-    position: 'relative',
-  },
-  CheckBox: {
-    height: '100%',
-  },
-});
-
 export default ListItem;

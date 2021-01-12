@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {Text, TouchableHighlight, View} from 'react-native';
 
-const Timer = () => {
+const Timer = props => {
   const [isPaused, setIsPaused] = useState(false);
   const [countdown, setCountdown] = useState(<View></View>);
   useEffect(() => {
     const interval = setInterval(() => {
       clearInterval(interval);
       if (!isPaused) {
-        const expiredTime = new Date(2021, 1, 5, 13, 20, 0);
+        const expiredTime = new Date(2021, 1, 20, 13, 20, 0);
         const now = new Date().getTime();
-        const distance = expiredTime - now;
+        const distance = props.lists[props.selected].duration;
 
         let hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
@@ -22,7 +22,13 @@ const Timer = () => {
 
         setCountdown(
           <TouchableHighlight
-            style={styles.Timer}
+            style={{
+              height: '40%',
+              width: '100%',
+              justifyContent: 'center',
+              backgroundColor: '#e9c46a',
+              marginBottom: 20,
+            }}
             onPress={() => setIsPaused(!isPaused)}>
             <View>
               <Text style={{textAlign: 'center', fontSize: 46}}>
@@ -39,18 +45,9 @@ const Timer = () => {
       } else {
         return;
       }
-    }, 50);
+    }, 100);
   });
   return countdown;
 };
-
-const styles = StyleSheet.create({
-  Timer: {
-    height: '40%',
-    width: '100%',
-    justifyContent: 'center',
-    backgroundColor: '#e9c46a',
-  },
-});
 
 export default Timer;

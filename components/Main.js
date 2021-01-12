@@ -24,7 +24,7 @@ const Main = () => {
     },
   ]);
   const shownList = lists.map((list, listIndex) => (
-    <ListItem list={list} listIndex={listIndex} />
+    <ListItem list={list} listIndex={listIndex} setSelected={setSelected} />
   ));
   return (
     <View>
